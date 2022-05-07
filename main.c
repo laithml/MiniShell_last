@@ -705,6 +705,8 @@ void ex(int WC, char *str, int *Total, int *commands) {
                     wait(&status);
                 }
                 close(fd);
+                for (int j = 0; j < WC; j++)
+                    free(arrayOfWords[j]);
                 (*commands)++;
                 (*Total) += WC - 1;
             }
