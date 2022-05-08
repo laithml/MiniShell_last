@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+
 bool BG = false;
 int cmdCount = 0, TotalWord = 0;
 
@@ -394,6 +395,7 @@ void pipeThreeCmd(char *str, int ind1, int ind2) {
         perror("fork Failed");
         exit(EXIT_FAILURE);
     } else if (pidLeft == 0) {
+         prctl(PR_SET_PDEATHSIG,SIGHUP);
         close(pipeLM[0]);
         close(pipeMR[0]);
         close(pipeMR[1]);
@@ -417,6 +419,7 @@ void pipeThreeCmd(char *str, int ind1, int ind2) {
             freeArr3(cmdArr1, cmdArr2, cmdArr3, WC1, WC2, WC3);
             exit(EXIT_FAILURE);
         } else if (pidMid == 0) {
+            prctl(PR_SET_PDEATHSIG,SIGHUP);
             //switch the pipe read file to standard input file, then the output file to the second pipe write file
             close(pipeLM[1]);
             close(pipeMR[0]);
@@ -445,6 +448,7 @@ void pipeThreeCmd(char *str, int ind1, int ind2) {
             } else if (pidRight == 0) {
                 //execute the third command after create the third child.
                 //switch the pipe read file to read from the standard input file.
+                prctl(PR_SET_PDEATHSIG,SIGHUP);
                 close(pipeLM[0]);
                 close(pipeLM[1]);
                 close(pipeMR[1]);
@@ -516,6 +520,7 @@ void pipeTwoCmd(char *str, int ind1) {
         freeArr2(cmdArr1, cmdArr2, WC1, WC2);
         exit(EXIT_FAILURE);
     } else if (pidLeft == 0) {
+        prctl(PR_SET_PDEATHSIG,SIGHUP);
         close(pipeFD[0]);
         dup2(pipeFD[1], STDOUT_FILENO);
         if (strcmp(cmd1, "history") == 0) {
@@ -534,6 +539,7 @@ void pipeTwoCmd(char *str, int ind1) {
             freeArr2(cmdArr1, cmdArr2, WC1, WC2);
             exit(EXIT_FAILURE);
         } else if (pidRight == 0) {
+            prctl(PR_SET_PDEATHSIG,SIGHUP);
             close(pipeFD[1]);
             dup2(pipeFD[0], STDIN_FILENO);
             if (strcmp(cmd2, "history") == 0) {
@@ -742,6 +748,7 @@ void ex(int WC, char *str, int *Total, int *commands) {
          */
         int status;
         if (x == 0) {
+            prctl(PR_SET_PDEATHSIG,SIGHUP);
             //check if the execvp doesn't work probably
             if (-1 == execvp(arrayOfWords[0], arrayOfWords)) {
                 perror("command not supported (Yet)");
