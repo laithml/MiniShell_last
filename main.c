@@ -471,7 +471,6 @@ void pipeThreeCmd(char *str, int ind1, int ind2) {
                     wait(&status);
                 }
                 cmdCount++;
-                TotalWord += 2;//because there's 2 pipe so there's "|" to of this
             }
         }
 
@@ -554,7 +553,6 @@ void pipeTwoCmd(char *str, int ind1) {
                 wait(&status);
             }
             cmdCount++;
-            TotalWord++;
 
         }
     }
@@ -674,6 +672,15 @@ const char *count(char str[], int *charCount, int *wordCount) {
         signal(SIGHUP, SIG_IGN);
         return "nohup";
     }
+    if(strcmp(word,"echo")==0) {
+        //replace quotation mark to space
+        int l = 0;
+        while (l < strlen(str)) {
+            if (str[l] == '\"')
+                str[l] = ' ';
+            l++;
+        }
+    }
     if (strcmp(word, "history") == 0 && (*charCount) == 7)
         return "history";
     if (strcmp(word, "cd") == 0)
@@ -781,12 +788,7 @@ void splitToArray(char *splitArray[], char Str[]) {
     int i = 0, start = 0, end = 0, j = 0, l = 0;
     if (Str[strlen(Str) - 1] == '&' && BG)
         Str[strlen(Str) - 1] = '\0';
-    //replace quotation mark to space
-    while (l < strlen(Str)) {
-        if (Str[l] == '\"')
-            Str[l] = ' ';
-        l++;
-    }
+
     while (i < strlen(Str) + 1) {
         //if the end change, so we arrived to the last char at the word
         if (end != 0) {
