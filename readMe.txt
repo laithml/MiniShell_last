@@ -14,7 +14,7 @@ In addition, the program now can work with pipes, background commands, and nohup
 functions:
 splitToArray: the function received 2 args, the input string and 2d array of chars, it’s split the input string every word in it entered in cell in the array that received.
 
-How It works: run at the input string save update 2 int every time one for the start index of the first character in the word and one for the last index in the word, and if end int is not zero so we arrived to the index of the last char in the word, so we allocate memory for the cells of the array with length of the word and + 1 for the  ‘\0’ (end - start +1), if there’s wrong with allocate the program free what it allocate and exit from the program, and the last cell of the array is NULL.
+How It works: run at the input string save update 2 int every time one for the start index of the first character in the word and one for the last index in the word, and if end int is not zero, so we arrived to the index of the last char in the word, so we allocate memory for the cells of the array with length of the word and + 1 for the  ‘\0’ (end - start +1), if there’s wrong with allocate the program free what it allocates and exit from the program, and the last cell of the array is NULL.
 
 Loop: void function that run all the program, infinity loop.
 
@@ -44,7 +44,7 @@ checkHistory: check if the input correct there's no spaces after '!'.
 
 freeArr2/freeArr3:free the allocated memory of arrays.
 
-ex: it received 4 parameters, int how many words in the string , the string and two pointer of int one for the command number and one for the word of the command, first it split the string to the array with size of wordCount +1, +1 for the NULL, it make a new process using fork() then execute the input string using execvp() function, after execute the command the father free the array.
+ex: it received 4 parameters, int how many words in the string , the string and two pointer of int one for the command number and one for the word of the command, first it split the string to the array with size of wordCount +1, +1 for the NULL, it makes a new process using fork() then execute the input string using execvp() function, after execute the command the father free the array.
 
 countLine: function that run throw the file and count how many rows in the history file.
 
@@ -84,6 +84,6 @@ string from user
 ==output==
 file.txt
 nohup.txt
-The executed command
+The executed commands
 Total command
 Total word in all commands
