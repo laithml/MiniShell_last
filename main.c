@@ -123,6 +123,8 @@ void loop() {
                     strcat(FinalCmd1, cmd2);
 
                     printf("%s\n", FinalCmd1);
+                    if(FinalCmd1[strlen(FinalCmd1)-1]=='&')
+                        BG=true;
                     pipeNum = countPipe(FinalCmd1, &ind1, &ind2);
                     if (pipeNum == 1)
                         pipeTwoCmd(FinalCmd1, ind1);
@@ -152,6 +154,8 @@ void loop() {
                     strcat(cmd2, FinalCmd1);
 
                     printf("%s\n", cmd2);
+                    if(cmd2[strlen(cmd2)-1]=='&')
+                        BG=true;
                     pipeNum = countPipe(cmd2, &ind1, &ind2);
                     if (pipeNum == 0) {
                         wordCount = 0, charCount = 0;
@@ -190,6 +194,9 @@ void loop() {
                             }
                             char cmd[514];
                             convertToString(Line, cmd);
+                            printf("%s",cmd);
+                            if(cmd[strlen(cmd)-1]=='&')
+                                BG=true;
                             const char *word = count(cmd, &wordCount, &charCount);
                             if (strcmp(word, "history") == 0) {
                                 history();
@@ -229,6 +236,8 @@ void loop() {
                         convertToString(line, cmd2);
                         strcat(FinalCmd1, cmd2);
                         printf("%s\n", FinalCmd1);
+                        if(FinalCmd1[strlen(FinalCmd1)-1]=='&')
+                            BG=true;
                         pipeNum = countPipe(FinalCmd1, &ind1, &ind2);
                         pipeTwoCmd(FinalCmd1, ind1);
                     }
@@ -815,4 +824,3 @@ void splitToArray(char *splitArray[], char Str[]) {
     //add the last element NULL for execvp method
     splitArray[j] = NULL;
 }
-
